@@ -2,9 +2,6 @@ from cube import *
 import pygame
 
 mycube = cube(300, 300, 60, 60, [1, -1], 2)
-# mycube.move()
-# mycube.updateDirection([-1, -1])
-# mycube.move()
 
 
 pygame.init()
