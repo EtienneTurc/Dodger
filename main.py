@@ -3,8 +3,6 @@ import pygame
 
 mycube = cube(300, 300, 60, 60, [1, -1], 2)
 
-# voila
-
 pygame.init()
 screen = pygame.display.set_mode((1200, 1000))
 done = False
