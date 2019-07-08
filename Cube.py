@@ -5,7 +5,7 @@ def checkDirection(direction):
         return direction
 
 
-class cube():
+class Cube():
     def __init__(self, x_pos, y_pos, h, w, d, s):
         self.x = x_pos  # float
         self.y = y_pos  # float
@@ -17,8 +17,6 @@ class cube():
     def move(self):
         self.x = self.speed * self.direction[0] + self.x
         self.y = self.speed * self.direction[1] + self.y
-        print(self.x)
-        print(self.y)
 
     def updateDirection(self, direction):
         self.direction = direction
