@@ -54,11 +54,10 @@ class Display():
                 return True
         return False
 
-    def drawCube(self, cube):
-        self.pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(
-            cube.x, cube.y, cube.height, cube.width))
+    def drawSquare(self, square):
+        self.pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(square.x, square.y, square.height, square.width))
 
-    def draw(self, cube):
+    def draw(self, square):
         self.screen.fill((0, 0, 0))
-        self.drawCube(cube)
+        self.drawSquare(square)
         self.pygame.display.flip()
