@@ -1,4 +1,5 @@
 import pygame
+from math import *
 
 
 class Display():
@@ -55,9 +56,44 @@ class Display():
         return False
 
     def drawSquare(self, square):
-        self.pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(square.x, square.y, square.height, square.width))
+        self.pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(
+            square.x, square.y, square.height, square.width))
 
-    def draw(self, square):
+    def drawMissile(self, missile):
+        image_orig = pygame.Surface((missile.height, missile.width))
+        image_orig.set_colorkey((0, 0, 0))
+        image_orig.fill((255, 0, 0))
+        image = image_orig.copy()
+        image.set_colorkey((0, 0, 0))
+
+        rect = image.get_rect()
+        rect.center = (missile.x, missile.y)
+        old_center = rect.center
+        rot = atan(-missile.direction[1]/missile.direction[0]) * 180 / pi
+        new_image = pygame.transform.rotate(image_orig, rot)
+        rect = new_image.get_rect()
+        rect.center = old_center
+        self.screen.blit(new_image, rect)
+
+    def draw(self, square, missiles):
         self.screen.fill((0, 0, 0))
         self.drawSquare(square)
+        for missile in missiles:
+            self.drawMissile(missile)
         self.pygame.display.flip()
+
+
+# tan(O) = oppposé / adjacent = y / x
+# O = arctan(y/x)
+# [x_rad, 2PI] radian
+# [x_degré, 360] degré
+
+
+# ------------
+#  -
+#   -
+#    -
+#     -
+#      -
+#       -
+#        -

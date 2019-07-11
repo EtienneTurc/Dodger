@@ -1,10 +1,12 @@
 from Display import *
+from Config import *
 
 
 class Game():
-    def __init__(self, square):
+    def __init__(self, square, missiles):
         self.square = square
-        self.display = Display(1500, 800)
+        self.missiles = missiles
+        self.display = Display(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.done = False
 
     def run(self):
@@ -15,4 +17,6 @@ class Game():
             direction = self.display.getDirectionFromInput()
             self.square.updateDirection(direction)
             self.square.move()
-            self.display.draw(self.square)
+            for missile in self.missiles:
+                missile.move()
+            self.display.draw(self.square, self.missiles)
