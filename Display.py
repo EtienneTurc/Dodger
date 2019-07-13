@@ -69,7 +69,15 @@ class Display():
         rect = image.get_rect()
         rect.center = (missile.x, missile.y)
         old_center = rect.center
-        rot = atan(-missile.direction[1]/missile.direction[0]) * 180 / pi
+
+        if missile.direction[0] == 0:
+            rot = 180 + 90 * missile.direction[1]
+        elif missile.direction[0] > 0:
+            rot = atan(-missile.direction[1]/missile.direction[0]) * 180 / pi
+        else:
+            rot = atan(-missile.direction[1] /
+                       missile.direction[0]) * 180 / pi + 180
+
         new_image = pygame.transform.rotate(image_orig, rot)
         rect = new_image.get_rect()
         rect.center = old_center
@@ -97,3 +105,13 @@ class Display():
 #      -
 #       -
 #        -
+
+#            |
+# ------------|
+#           -
+#          -
+#         -
+#        -
+#       -
+#      -
+#     -
