@@ -10,6 +10,33 @@ def norm(d):
     return n_d
 
 
+# def intersect(A, B, directionA, directionB):
+#     # Peut être pas ouf
+#     if directionA[0] == 0 and directionB == 0:
+#         return False
+
+#     elif directionA[0] == 0:
+#         slope_b = directionB[1] / directionB[0]
+#         ord_b = B[1] - slope_b * B[0]
+#         return [A[0], slope_b*A[0] + ord_b]
+
+#     elif directionB[0] == 0:
+#         slope_a = directionA[1] / directionA[0]
+#         ord_a = A[1] - slope_a * A[0]
+#         return [B[0], slope_a*B[0] + ord_a]
+
+#     slope_a = directionA[1] / directionA[0]
+#     slope_b = directionB[1] / directionB[0]
+#     ord_a = A[1] - slope_a * A[0]
+#     ord_b = B[1] - slope_b * B[0]
+#     den = slope_a - slope_b
+#     if A[0] * B[1] == B[0] * A[1]:
+#         x = (ord_b - ord_a)/den
+#         y = (slope_a * ord_b - slope_b * ord_a)/den
+#         return x, y
+#     return False
+
+
 def initPosition():
     # Without corner
     on_sides = random.randint(0, 1)
@@ -83,13 +110,23 @@ class Missile():
 
     def toDelete(self):
         # Return true or false
-        if (self.x < - SPAWN_SIZE - MISSILE_HEIGHT or self.x > SCREEN_WIDTH + SPAWN_SIZE + MISSILE_HEIGHT) or (self.y < - SPAWN_SIZE - MISSILE_HEIGHT or self.y > SCREEN_HEIGHT + SPAWN_SIZE + MISSILE_HEIGHT):
+        if (self.x < - SPAWN_SIZE - self.height or self.x > SCREEN_WIDTH + SPAWN_SIZE + self.height) or (self.y < - SPAWN_SIZE - self.height or self.y > SCREEN_HEIGHT + SPAWN_SIZE + self.height):
             return True
         return False
 
-    def hit(self):
-        if x.square >= self.x.missile and x.square + SQUARE_WIDTH <= self.x.missile + MISSILE_WIDTH:
-            if y.square >= self.y.missile and y.square + SQUARE_HEIGHT <= self.y.missile + MISSILE_HEIGHT:
-                print("hit")
+    def hit(self, square):
+        diag = sqrt(self.height**2 + self.width**2)
+        left_top = [self.x, self.y]
+        right_top = [self.x + self.width * self.direction[0],
+                     self.y + self.width * self.direction[1]]
+        left_bot = [self.x + self.height * self.direction[0],
+                    self.y + self.height * self.direction[1]]
+        right_bot = [self.x + diag * self.direction[0],
+                     self.y + diag * self.direction[1]]
+
+        summits = [left_top, right_top, left_bot, right_bot]
+
+        for s in summits:
+            if square.x <= s[0] and square.x + square.width >= s[0] and square.y <= s[1] and square.y + square.height >= s[1]:
                 return True
         return False
