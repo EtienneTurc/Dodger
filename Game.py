@@ -33,6 +33,7 @@ class Game():
                 if (missile.toDelete()):
                     self.missiles.remove(missile)
                 if (missile.hit(self.square)):
+                    # return
                     self.missiles.remove(missile)
 
             self.display.draw(self.square, self.missiles)

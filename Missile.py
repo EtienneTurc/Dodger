@@ -115,14 +115,25 @@ class Missile():
         return False
 
     def hit(self, square):
-        diag = sqrt(self.height**2 + self.width**2)
-        left_top = [self.x, self.y]
-        right_top = [self.x + self.width * self.direction[0],
-                     self.y + self.width * self.direction[1]]
-        left_bot = [self.x + self.height * self.direction[0],
-                    self.y + self.height * self.direction[1]]
-        right_bot = [self.x + diag * self.direction[0],
-                     self.y + diag * self.direction[1]]
+        # rotation from center
+        demi_diag = sqrt(self.height**2 + self.width**2) / 2
+        left_top = [self.x - demi_diag * self.direction[0],
+                    self.y - demi_diag * self.direction[1]]
+        right_top = [self.x + demi_diag * self.direction[0],
+                     self.y - demi_diag * self.direction[1]]
+        left_bot = [self.x - demi_diag * self.direction[0],
+                    self.y + demi_diag * self.direction[1]]
+        right_bot = [self.x + demi_diag * self.direction[0],
+                     self.y + demi_diag * self.direction[1]]
+        # rotation top left
+        # diag = sqrt(self.height**2 + self.width**2)
+        # left_top = [self.x, self.y]
+        # right_top = [self.x + self.width * self.direction[0],
+        #              self.y + self.width * self.direction[1]]
+        # left_bot = [self.x + self.height * self.direction[0],
+        #             self.y + self.height * self.direction[1]]
+        # right_bot = [self.x + diag * self.direction[0],
+        #              self.y + diag * self.direction[1]]
 
         summits = [left_top, right_top, left_bot, right_bot]
 
