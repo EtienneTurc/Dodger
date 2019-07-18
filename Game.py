@@ -12,6 +12,7 @@ class Game():
         self.done = False
         self.time_between_missiles = TIME_BETWEEN_MISSILES
         self.time_last_missile = 0
+        self.score = 0
 
     def run(self):
         while not self.done:
@@ -33,7 +34,6 @@ class Game():
                 if (missile.toDelete()):
                     self.missiles.remove(missile)
                 if (missile.hit(self.square)):
-                    # return
                     self.missiles.remove(missile)
 
             self.display.draw(self.square, self.missiles)

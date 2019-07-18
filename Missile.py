@@ -53,6 +53,7 @@ def initPosition():
                                              screen[1-on_sides] + SPAWN_SIZE)
     else:
         pos[1-on_sides] = random.randint(0, screen[1-on_sides])
+
     return pos
 
 
@@ -88,7 +89,7 @@ def initDirection(x, y):
         return [cos(alpha), sin(alpha)]
     if y < 0:
         return [cos(pi/2 + alpha), sin(pi/2 + alpha)]
-    if x > 0:
+    if x > SCREEN_WIDTH:
         return [cos(pi + alpha), sin(pi + alpha)]
     return [cos(3*pi/2 + alpha), sin(3*pi/2+alpha)]
 
