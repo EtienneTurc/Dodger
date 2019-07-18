@@ -86,3 +86,10 @@ class Missile():
         if (self.x < - SPAWN_SIZE - MISSILE_HEIGHT or self.x > SCREEN_WIDTH + SPAWN_SIZE + MISSILE_HEIGHT) or (self.y < - SPAWN_SIZE - MISSILE_HEIGHT or self.y > SCREEN_HEIGHT + SPAWN_SIZE + MISSILE_HEIGHT):
             return True
         return False
+
+    def hit(self):
+        if x.square >= self.x.missile and x.square + SQUARE_WIDTH <= self.x.missile + MISSILE_WIDTH:
+            if y.square >= self.y.missile and y.square + SQUARE_HEIGHT <= self.y.missile + MISSILE_HEIGHT:
+                print("hit")
+                return True
+        return False

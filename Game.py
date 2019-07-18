@@ -30,7 +30,10 @@ class Game():
                 self.time_last_missile = current_time
             for missile in self.missiles:
                 missile.move()
+                missile.hit()
                 if (missile.toDelete()):
+                    self.missiles.remove(missile)
+                if (missile.hit()):
                     self.missiles.remove(missile)
 
             self.display.draw(self.square, self.missiles)
