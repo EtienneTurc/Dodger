@@ -24,6 +24,7 @@ class Game():
             if self.display.retry():
                 self.__init__()
                 self.done_game = False
+
             current_time = int(round(time.time() * 1000))
             while not self.done_game:
                 last_time = current_time
@@ -32,14 +33,17 @@ class Game():
                 self.done_game = self.display.closingWindow()
                 self.done_all = self.done_game
                 self.display.updateInput()
-                direction = self.display.getDirectionFromInput()
 
+                direction = self.display.getDirectionFromInput()
                 self.square.updateDirection(direction)
                 self.square.move((current_time - last_time)/1000)
+                if self.display.getDashEvent():
+                    self.square.dash()
 
                 if (current_time - self.time_last_missile >= self.time_between_missiles):
                     self.missiles.append(
                         Missile(MISSILE_HEIGHT, MISSILE_WIDTH, MISSILE_SPEED))
+                    self.time_between_missiles -= 0.5
                     self.score += 1
                     self.time_last_missile = current_time
                 for missile in self.missiles:

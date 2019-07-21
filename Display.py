@@ -96,6 +96,7 @@ class Display():
         for missile in missiles:
             self.drawMissile(missile)
         self.drawScore(score)
+        self.drawDash(square.cd_dash)
         self.pygame.display.flip()
 
     def retry(self):
@@ -112,30 +113,23 @@ class Display():
                 pos = pygame.mouse.get_pos()
                 if button.collidepoint(pos):
                     return True
+            if event.type == pygame.KEYDOWN and event.key == K_SPACE:
+                return True
         return False
 
+    def getDashEvent(self):
+        for event in self.events:
+            if event.type == pygame.KEYDOWN and event.key == K_SPACE:
+                return True
+        return False
 
-# tan(O) = oppposé / adjacent = y / x
-# O = arctan(y/x)
-# [x_rad, 2PI] radian
-# [x_degré, 360] degré
-
-
-# ------------
-#  -
-#   -
-#    -
-#     -
-#      -
-#       -
-#        -
-
-#            |
-# ------------|
-#           -
-#          -
-#         -
-#        -
-#       -
-#      -
-#     -
+    def drawDash(self, cd_dash):
+        if (cd_dash <= 0):
+            cd_dash = 0
+        img = pygame.image.load('img/flash.jpg')
+        img_resize = pygame.transform.scale(img, (20, 20))
+        self.screen.blit(img_resize, (25, 25))
+        font = pygame.font.SysFont("comicsansms", 18)
+        text = font.render(str(floor(cd_dash)), True, (0, 0, 0))
+        self.screen.blit(text, (25, 25))
+        self.pygame.display.flip()
