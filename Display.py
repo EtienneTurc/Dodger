@@ -1,5 +1,6 @@
 import pygame
 from math import *
+from Config import *
 
 
 class Display():
@@ -83,11 +84,17 @@ class Display():
         rect.center = old_center
         self.screen.blit(new_image, rect)
 
-    def draw(self, square, missiles):
+    def drawScore(self, score):
+        font = pygame.font.SysFont("comicsansms", 18)
+        text = font.render("Score : " + str(score), True, (255, 255, 255))
+        self.screen.blit(text, (SCREEN_WIDTH - 125, 25))
+
+    def draw(self, square, missiles, score):
         self.screen.fill((0, 0, 0))
         self.drawSquare(square)
         for missile in missiles:
             self.drawMissile(missile)
+        self.drawScore(score)
         self.pygame.display.flip()
 
 

@@ -28,6 +28,7 @@ class Game():
             if (current_time - self.time_last_missile >= self.time_between_missiles):
                 self.missiles.append(
                     Missile(MISSILE_HEIGHT, MISSILE_WIDTH, MISSILE_SPEED))
+                self.score += 1
                 self.time_last_missile = current_time
             for missile in self.missiles:
                 missile.move()
@@ -36,4 +37,4 @@ class Game():
                 if (missile.hit(self.square)):
                     self.missiles.remove(missile)
 
-            self.display.draw(self.square, self.missiles)
+            self.display.draw(self.square, self.missiles, self.score)
