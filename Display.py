@@ -1,6 +1,7 @@
 import pygame
 from math import *
 from Config import *
+from Utils import *
 
 
 class Display():
@@ -57,13 +58,13 @@ class Display():
         return False
 
     def drawSquare(self, square):
-        self.pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(
+        self.pygame.draw.rect(self.screen, SQUARE_COLOR, pygame.Rect(
             square.x, square.y, square.height, square.width))
 
     def drawMissile(self, missile):
         image_orig = pygame.Surface((missile.height, missile.width))
         image_orig.set_colorkey((0, 0, 0))
-        image_orig.fill((255, 0, 0))
+        image_orig.fill(MISSILE_COLOR)
         image = image_orig.copy()
         image.set_colorkey((0, 0, 0))
 
@@ -96,6 +97,22 @@ class Display():
             self.drawMissile(missile)
         self.drawScore(score)
         self.pygame.display.flip()
+
+    def retry(self):
+        AAfilledRoundedRect(self.screen, pygame.Rect(
+            SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 2-5, BUTTON_WIDTH + 3, BUTTON_HEIGHT + 3), BUTTON_COLOR_SHADOW, BUTTON_RADIUS)
+        button = AAfilledRoundedRect(self.screen, pygame.Rect(
+            SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 2-5, BUTTON_WIDTH, BUTTON_HEIGHT), BUTTON_COLOR, BUTTON_RADIUS)
+        font = pygame.font.SysFont("comicsansms", 30)
+        text = font.render("RETRY", True, (255, 255, 255))
+        self.screen.blit(text, (SCREEN_WIDTH / 2 - 5, SCREEN_HEIGHT / 2 + 5))
+        self.pygame.display.flip()
+        for event in self.events:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                pos = pygame.mouse.get_pos()
+                if button.collidepoint(pos):
+                    return True
+        return False
 
 
 # tan(O) = oppposé / adjacent = y / x

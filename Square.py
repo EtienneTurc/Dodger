@@ -23,15 +23,15 @@ class Square():
         self.direction = d  # 2 elements => valeurs possibles -1 0 ou 1
         self.speed = s  # float
 
-    def move(self):
-        x_virtual = self.speed * self.direction[0] + self.x
-        y_virtual = self.speed * self.direction[1] + self.y
+    def move(self, delta_time):
+        x_virtual = self.speed * delta_time * self.direction[0] + self.x
+        y_virtual = self.speed * delta_time * self.direction[1] + self.y
         height = self.height
         width = self.width
         if canMove(x_virtual, self.y, height, width):
-            self.x = self.speed * self.direction[0] + self.x
+            self.x = self.speed * delta_time * self.direction[0] + self.x
         if canMove(self.x, y_virtual, height, width):
-            self.y = self.speed * self.direction[1] + self.y
+            self.y = self.speed * delta_time * self.direction[1] + self.y
 
     def updateDirection(self, direction):
         self.direction = direction

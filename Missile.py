@@ -105,9 +105,9 @@ class Missile():
         self.direction = initDirection(self.x, self.y)
         self.speed = s
 
-    def move(self):
-        self.x = self.speed * self.direction[0] + self.x
-        self.y = self.speed * self.direction[1] + self.y
+    def move(self, delta_time):
+        self.x = self.speed * delta_time * self.direction[0] + self.x
+        self.y = self.speed * delta_time * self.direction[1] + self.y
 
     def toDelete(self):
         # Return true or false
