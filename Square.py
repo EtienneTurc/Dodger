@@ -23,6 +23,7 @@ class Square():
         self.direction = d  # 2 elements => valeurs possibles -1 0 ou 1
         self.speed = s  # float
         self.cd_dash = 0
+        self.lives = 3
 
     def move(self, delta_time):
         x_virtual = self.speed * delta_time * self.direction[0] + self.x
@@ -31,8 +32,18 @@ class Square():
         width = self.width
         if canMove(x_virtual, self.y, height, width):
             self.x = self.speed * delta_time * self.direction[0] + self.x
+        else:
+            if SCREEN_WIDTH - self.x < self.x:
+               self. x = SCREEN_WIDTH - SQUARE_WIDTH
+            else:
+                self.x = 0
         if canMove(self.x, y_virtual, height, width):
             self.y = self.speed * delta_time * self.direction[1] + self.y
+        else:
+            if SCREEN_HEIGHT - self.y < self.y:
+                self.y = SCREEN_HEIGHT - SQUARE_HEIGHT
+            else:
+                self.y = 0
         self.cd_dash -= delta_time
 
     def updateDirection(self, direction):
@@ -56,3 +67,6 @@ class Square():
             else:
                 self.y = self.speed * delta_time * self.direction[1] + self.y
             self.cd_dash = CD_DASH
+
+    def decreaseLife(self):
+        self.lives -= 1

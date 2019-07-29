@@ -51,7 +51,9 @@ class Game():
                     if (missile.toDelete()):
                         self.missiles.remove(missile)
                     if (missile.hit(self.square)):
+                        self.square.decreaseLife()
                         self.missiles.remove(missile)
+                    if self.square.lives <= 0:
                         self.done_game = True
-
+                        
                 self.display.draw(self.square, self.missiles, self.score)

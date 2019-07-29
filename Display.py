@@ -61,6 +61,12 @@ class Display():
         self.pygame.draw.rect(self.screen, SQUARE_COLOR, pygame.Rect(
             square.x, square.y, square.height, square.width))
 
+    def drawLives(self, lives):
+            img = pygame.image.load('img/heart.png')
+            img_resize = pygame.transform.scale(img, (20, 20))
+            for i in range(lives):
+                self.screen.blit(img_resize, (50 + i * 25, 25))
+
     def drawMissile(self, missile):
         image_orig = pygame.Surface((missile.height, missile.width))
         image_orig.set_colorkey((0, 0, 0))
@@ -96,7 +102,8 @@ class Display():
         for missile in missiles:
             self.drawMissile(missile)
         self.drawScore(score)
-        self.drawDash(square.cd_dash)
+        self.drawDash(square.cd_dash)    
+        self.drawLives(square.lives)
         self.pygame.display.flip()
 
     def retry(self):
@@ -126,10 +133,10 @@ class Display():
     def drawDash(self, cd_dash):
         if (cd_dash <= 0):
             cd_dash = 0
-        img = pygame.image.load('img/flash.jpg')
+        img = pygame.image.load('img/Dash2.png')
         img_resize = pygame.transform.scale(img, (20, 20))
         self.screen.blit(img_resize, (25, 25))
-        font = pygame.font.SysFont("comicsansms", 18)
-        text = font.render(str(floor(cd_dash)), True, (0, 0, 0))
-        self.screen.blit(text, (25, 25))
-        self.pygame.display.flip()
+        if cd_dash > 0:
+            font = pygame.font.SysFont("comicsansms", 18)
+            text = font.render(str(floor(cd_dash)), True, (255, 255, 255))
+            self.screen.blit(text, (19, 22))
