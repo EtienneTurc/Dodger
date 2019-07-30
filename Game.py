@@ -3,6 +3,7 @@ from Config import *
 from Missile import *
 from Square import *
 import time
+import readWrite
 
 
 class Game():
@@ -21,6 +22,8 @@ class Game():
         while not self.done_all:
             self.display.getEvents()
             self.done_all = self.display.closingWindow()
+            leaderboard = readWrite.readCsv()
+            self.display.drawleaderboard(leaderboard)
             if self.display.retry():
                 self.__init__()
                 self.done_game = False
@@ -55,5 +58,6 @@ class Game():
                         self.missiles.remove(missile)
                     if self.square.lives <= 0:
                         self.done_game = True
+                        readWrite.writeInCsv(self.score)
                         
                 self.display.draw(self.square, self.missiles, self.score)

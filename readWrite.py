@@ -2,20 +2,17 @@ import csv
 
 
 def readCsv():
-    with open('people.csv', 'r') as readFile:
+    with open('Leaderboard.csv', 'r') as readFile:
         spamreader = csv.reader(readFile, delimiter=',')
+        data = []
         for row in spamreader:
-            return(row)
+            data.append(row)
     readFile.close()
+    return(data)
 
-
-def writeInCsv():
-    with open('people.csv', 'a') as writeFile:
+def writeInCsv(score):
+    with open('Leaderboard.csv', 'a', newline = '') as writeFile:
         writer = csv.writer(writeFile)
-        row = ['Simon', 'Score']
+        row = ['Simon',str(score)]
         writer.writerow(row)
     writeFile.close()
-
-
-writeInCsv()
-readCsv()

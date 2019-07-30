@@ -2,6 +2,7 @@ import pygame
 from math import *
 from Config import *
 from Utils import *
+from readWrite import *
 
 
 class Display():
@@ -108,12 +109,12 @@ class Display():
 
     def retry(self):
         AAfilledRoundedRect(self.screen, pygame.Rect(
-            SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 2-5, BUTTON_WIDTH + 3, BUTTON_HEIGHT + 3), BUTTON_COLOR_SHADOW, BUTTON_RADIUS)
+            BUTTON_X , BUTTON_Y , BUTTON_WIDTH + 3, BUTTON_HEIGHT + 3), BUTTON_COLOR_SHADOW, BUTTON_RADIUS)
         button = AAfilledRoundedRect(self.screen, pygame.Rect(
-            SCREEN_WIDTH / 2 - 20, SCREEN_HEIGHT / 2-5, BUTTON_WIDTH, BUTTON_HEIGHT), BUTTON_COLOR, BUTTON_RADIUS)
+            BUTTON_X , BUTTON_Y , BUTTON_WIDTH, BUTTON_HEIGHT), BUTTON_COLOR, BUTTON_RADIUS)
         font = pygame.font.SysFont("comicsansms", 30)
         text = font.render("RETRY", True, (255, 255, 255))
-        self.screen.blit(text, (SCREEN_WIDTH / 2 - 5, SCREEN_HEIGHT / 2 + 5))
+        self.screen.blit(text, (BUTTON_X ,BUTTON_Y))
         self.pygame.display.flip()
         for event in self.events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -140,3 +141,10 @@ class Display():
             font = pygame.font.SysFont("comicsansms", 18)
             text = font.render(str(floor(cd_dash)), True, (255, 255, 255))
             self.screen.blit(text, (19, 22))
+
+    def drawleaderboard(self,data):
+        font = pygame.font.SysFont("comicsansms", 20)
+        for i in range(len(data)):
+            text = font.render(data[i][0] + '  :  ' + data[i][1], True, (255, 255, 255))
+            self.screen.blit(text, (LEADERBOARD_X, LEADERBOARD_Y + i * 23))
+
