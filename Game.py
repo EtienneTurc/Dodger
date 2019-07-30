@@ -2,8 +2,10 @@ from Display import *
 from Config import *
 from Missile import *
 from Square import *
+from Client import *
 import time
 import readWrite
+import random
 
 
 class Game():
@@ -17,6 +19,7 @@ class Game():
         self.time_between_missiles = TIME_BETWEEN_MISSILES
         self.time_last_missile = 0
         self.score = 0
+        self.client = Client()
 
     def run(self):
         while not self.done_all:
@@ -25,6 +28,12 @@ class Game():
             leaderboard = readWrite.readCsv()
             self.display.drawleaderboard(leaderboard)
             if self.display.retry():
+                if SERVER_ENABLED:
+                    while True:
+                        data = self.client.connect()
+                        if data != "RESTART":
+                            random.seed(int(data))
+                            break
                 self.__init__()
                 self.done_game = False
 
@@ -59,5 +68,11 @@ class Game():
                     if self.square.lives <= 0:
                         self.done_game = True
                         readWrite.writeInCsv(self.score)
-                        
+                        if SERVER_ENABLED:
+                            self.client.stop()
+
                 self.display.draw(self.square, self.missiles, self.score)
+
+                if SERVER_ENABLED:
+                    self.client.sendData(
+                        self.square, self.missiles, self.score)

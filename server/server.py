@@ -26,27 +26,33 @@ while True:
 
     if restart_retry:
         for a in addrs:
-            print(a)
+            print("restart retry", a)
             sock.sendto("RESTART".encode(), a)
         continue
 
     message = str(random.randint(0, 100000))
     for a in addrs:
-        print(a)
+        print("seed", a)
         sock.sendto(message.encode(), a)
 
     game_done = 0
-    while game_done <= n:
-        data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-        if data.decode() == 'STOP':
+    while game_done < n:
+        data, addr = sock.recvfrom(8192)  # buffer size is 1024 bytes
+        if data.decode() == "STOP":
             game_done += 1
+            continue
+
+        if "SQUARE" not in data.decode() and "MISSILES" not in data.decode() and "SCORE" not in data.decode():
+            continue
 
         data = data.decode().split("||")
+        print(data)
         square = data[0].split(";")[1:]
         square = listToInt(square)
         missiles_str = data[1].split("MISSILES")[1:]
         missiles = []
         for m in missiles_str:
-            missiles.append(listToInt(m.split(";")))
+            m_str = m.split(";")
+            missiles.append(listToInt(m_str[0:4]) + listToFloat(m_str[4:]))
         score = int(data[2].split(";")[1])
-        displays[addrs.index(addr)].draw(square, missiles, score)
+        displays[getIndex(addrs, addr)].draw(square, missiles, score)

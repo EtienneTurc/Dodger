@@ -1,12 +1,30 @@
 from pygame import *
+from math import *
 
 
 def listToInt(l):
     data = []
     for e in l:
         if e != '':
-            data.append(int(e))
+            data.append(floor(float(e)))
     return(data)
+
+
+def listToFloat(l):
+    print(l)
+    data = []
+    for e in l:
+        if e != '':
+            data.append(float(e))
+    print(data)
+    return(data)
+
+
+def getIndex(addrs, addr):
+    for i in range(len(addrs)):
+        if (addrs[i][0] == addr[0]):
+            return i
+    return False
 
 
 def AAfilledRoundedRect(surface, rect, color, radius=0.4):
