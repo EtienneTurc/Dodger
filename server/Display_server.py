@@ -1,14 +1,14 @@
 import pygame
 from math import *
-from Config import *
-from Utils import *
+from Config_server import *
+from Utils_server import *
 
 
 class Display():
     def __init__(self, height, width):
         pygame.init()
         self.pygame = pygame
-        self.screen = self.pygame.display.set_mode((height, width))
+        self.screen = self.pygame.display.set_mode((width, height))
 
     def drawSquare(self, square):
         self.pygame.draw.rect(self.screen, SQUARE_COLOR, pygame.Rect(
@@ -66,8 +66,8 @@ class Display():
         for missile in missiles:
             self.drawMissile(missile)
         self.drawScore(score)
-        self.drawDash(square.cd_dash)
-        self.drawLives(square.lives)
+        # self.drawDash(square.cd_dash)
+        # self.drawLives(square.lives)
         self.pygame.display.flip()
 
     def retry(self):

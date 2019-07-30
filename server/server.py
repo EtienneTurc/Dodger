@@ -1,17 +1,18 @@
 import socket
 import random
-
-
-UDP_IP = "localhost"
-UDP_PORT = 8000
+from Display_server import *
+from Config_server import *
+from Utils_server import *
 
 sock = socket.socket(socket.AF_INET,  # Internet
                      socket.SOCK_DGRAM)  # UDP
 sock.bind((UDP_IP, UDP_PORT))
 
-
 n = int(input("Number of players: "))
 
+displays = []
+for i in range(n):
+    displays.append(Display(SCREEN_HEIGHT, SCREEN_WIDTH))
 
 while True:
     restart_retry = False
@@ -34,8 +35,18 @@ while True:
         print(a)
         sock.sendto(message.encode(), a)
 
-    in_game = True
-    while in_game:
+    game_done = 0
+    while game_done <= n:
         data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-        print(data)
-        print(addr)
+        if data.decode() == 'STOP':
+            game_done += 1
+
+        data = data.decode().split("||")
+        square = data[0].split(";")[1:]
+        square = listToInt(square)
+        missiles_str = data[1].split("MISSILES")[1:]
+        missiles = []
+        for m in missiles_str:
+            missiles.append(listToInt(m.split(";")))
+        score = int(data[2].split(";")[1])
+        displays[addrs.index(addr)].draw(square, missiles, score)
