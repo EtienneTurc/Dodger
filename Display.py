@@ -114,7 +114,7 @@ class Display():
             BUTTON_X , BUTTON_Y , BUTTON_WIDTH, BUTTON_HEIGHT), BUTTON_COLOR, BUTTON_RADIUS)
         font = pygame.font.SysFont("comicsansms", 30)
         text = font.render("RETRY", True, (255, 255, 255))
-        self.screen.blit(text, (BUTTON_X ,BUTTON_Y))
+        self.screen.blit(text, (BUTTON_X_RETRY ,BUTTON_Y_RETRY))
         self.pygame.display.flip()
         for event in self.events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
