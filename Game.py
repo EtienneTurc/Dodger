@@ -65,11 +65,11 @@ class Game():
                     if (missile.hit(self.square)):
                         self.square.decreaseLife()
                         self.missiles.remove(missile)
-                    if self.square.lives <= 0:
-                        self.done_game = True
-                        readWrite.writeInCsv(self.score)
-                        if SERVER_ENABLED:
-                            self.client.stop()
+                if self.square.lives <= 0:
+                    self.done_game = True
+                    readWrite.writeInCsv(self.score)
+                    if SERVER_ENABLED:
+                        self.client.stop()
 
                 self.display.draw(self.square, self.missiles, self.score)
 

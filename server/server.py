@@ -14,15 +14,24 @@ displays = []
 for i in range(n):
     displays.append(Display(SCREEN_HEIGHT, SCREEN_WIDTH))
 
+addrs = []
+first_time = True
 while True:
     restart_retry = False
-    addrs = []
-    for i in range(n):
-        print(i)
-        data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-        addrs.append(addr)
-        if data.decode() != "RETRY":
-            restart_retry = True
+    if first_time:
+        for i in range(n):
+            data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+            print(data)
+            addrs.append(addr)
+            if data.decode() != "RETRY":
+                restart_retry = True
+    else:
+        ready_addr = []
+        while len(ready_addr) < n:
+            data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+            if addr not in ready_addr:
+                ready_addr.append(addr)
+    first_time = False
 
     if restart_retry:
         for a in addrs:

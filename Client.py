@@ -1,7 +1,5 @@
 import socket
-
-UDP_IP = "localhost"
-UDP_PORT = 8000
+from Config import *
 
 
 class Client():
@@ -12,6 +10,7 @@ class Client():
     def connect(self):
         self.sock.sendto("RETRY".encode(), (UDP_IP, UDP_PORT))
         data, addr = self.sock.recvfrom(1024)  # buffer size is 1024 bytes
+        print(data)
         return data.decode()
 
     def stop(self):
